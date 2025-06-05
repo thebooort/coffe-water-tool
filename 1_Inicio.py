@@ -10,7 +10,7 @@ st.sidebar.success("Selecciona una pestaña arriba.")
 st.sidebar.markdown('CoffeeWater permite visualizar, comparar y mezclar aguas utilizadas en preparación de café, en función de su alcalinidad y dureza. Puedes elegir dos marcas (ciudad, embotellada, comercial o oficial), definir la proporción de mezcla y ver dónde cae la combinación respecto a la zona ideal SCA.')
 # add the logo small
 st.markdown('# Bienvenido a Coffe Water')
-image_url = "https://raw.githubusercontent.com/thebooort/coffee-water-tool/main/images/logo.png" 
+image_url = "https://raw.githubusercontent.com/thebooort/coffe-water-tool/refs/heads/main/images/logo.png" 
 image_width = 400
 centered_image_html = f"""
 <div style="display: flex; justify-content: center;">

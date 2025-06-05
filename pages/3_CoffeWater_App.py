@@ -6,6 +6,9 @@ logo_image = "images/logo.png"
 st.logo(logo_image,size='large')
 lang = st.sidebar.selectbox("Idioma / Language", ["Español", "English"])
 
+
+
+
 textos = {
     "Español": {
         "title": "💧 Composición del agua para preparar café",
@@ -36,7 +39,12 @@ etiquetas = {
     "Español": {"Ciudad": "Ciudad", "Embotellada": "Embotellada", "Comercial": "Comercial", "Oficial": "Oficial"},
     "English": {"Ciudad": "City", "Embotellada": "Bottled", "Comercial": "Commercial", "Oficial": "Official"}
 }
-
+colores_por_grupo = {
+    etiquetas[lang]["Ciudad"]: "blue",
+    etiquetas[lang]["Embotellada"]: "green",
+    etiquetas[lang]["Comercial"]: "orange",
+    etiquetas[lang]["Oficial"]: "red"
+}
 def etiquetar(dic, grupo):
     return {f"{grupo}: {k}": v for k, v in dic.items()}
 
@@ -83,13 +91,16 @@ st.write(f"**{textos[lang]['hard']}:** {mix['hardness']:.2f} ppm as CaCO₃")
 
 fig = go.Figure()
 for name, data in all_waters.items():
+    grupo = name.split(":")[0]  # e.g. "Embotellada"
+    color = colores_por_grupo.get(grupo, "gray")  # color por defecto si no lo encuentra
     fig.add_trace(go.Scatter(
         x=[data['alkalinity']],
         y=[data['hardness']],
         mode='markers+text',
-        text=[name],
+        text=[name.split(':')[1]],
         textposition='top center',
-        marker=dict(size=10)
+        name=name,
+        marker=dict(size=10, color=color)
     ))
 fig.add_trace(go.Scatter(
     x=[mix['alkalinity']],
@@ -97,8 +108,21 @@ fig.add_trace(go.Scatter(
     mode='markers+text',
     text=[f"{agua1} + {agua2}"],
     textposition="bottom center",
+    name = 'Mezcla generada',
     marker=dict(size=12, color='purple', symbol='x')
 ))
+fig.add_shape(
+    type="line",
+    x0=0, x1=0, y0=0, y1=420,
+    line=dict(color="black", width=1),
+    layer="below"
+)
+fig.add_shape(
+    type="line",
+    x0=0, x1=360, y0=0, y1=0,
+    line=dict(color="black", width=1),
+    layer="below"
+)
 fig.add_shape(type="rect", x0=40, y0=50, x1=75, y1=175,
                 fillcolor="lightgreen", opacity=0.3, layer="below", line_width=0)
 fig.add_annotation(x=42, y=160, text=textos[lang]['zone'], showarrow=False,
@@ -108,7 +132,15 @@ fig.update_layout(
     yaxis_title="Total Hardness (ppm as CaCO₃)",
     xaxis=dict(range=[0, 360]),
     yaxis=dict(range=[0, 420]),
-    height=650
+    height=650,
+    width = 800,
+    legend=dict(
+    orientation="h",  # horizontal
+    yanchor="bottom",
+    y=-0.5,            # posición vertical (ajusta según el espacio que tengas)
+    xanchor="center",
+    x=0.5              # centrado horizontal
+)
 )
 st.plotly_chart(fig, use_container_width=True)
 

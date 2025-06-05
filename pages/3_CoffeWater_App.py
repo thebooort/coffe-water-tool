@@ -2,7 +2,8 @@
 import streamlit as st
 import plotly.graph_objects as go
 
-
+logo_image = "images/logo.png"
+st.logo(logo_image,size='large')
 lang = st.sidebar.selectbox("Idioma / Language", ["Español", "English"])
 
 textos = {
@@ -27,7 +28,10 @@ textos = {
         "zone": "SCA Ideal Zone"
     }
 }
+st.sidebar.success("Selecciona una pestaña arriba.")
 
+st.sidebar.markdown('CoffeeWater permite visualizar, comparar y mezclar aguas utilizadas en preparación de café, en función de su alcalinidad y dureza. Puedes elegir dos marcas (ciudad, embotellada, comercial o oficial), definir la proporción de mezcla y ver dónde cae la combinación respecto a la zona ideal SCA.')
+# add the logo small
 etiquetas = {
     "Español": {"Ciudad": "Ciudad", "Embotellada": "Embotellada", "Comercial": "Comercial", "Oficial": "Oficial"},
     "English": {"Ciudad": "City", "Embotellada": "Bottled", "Comercial": "Commercial", "Oficial": "Official"}
@@ -61,6 +65,7 @@ all_waters = {
 }
 
 st.title(textos[lang]["title"])
+
 agua1 = st.selectbox(textos[lang]["select1"], list(all_waters.keys()), index=0)
 agua2 = st.selectbox(textos[lang]["select2"], list(all_waters.keys()), index=1)
 ratio = st.slider(textos[lang]["ratio"], 0, 100, 50)
@@ -106,3 +111,4 @@ fig.update_layout(
     height=650
 )
 st.plotly_chart(fig, use_container_width=True)
+

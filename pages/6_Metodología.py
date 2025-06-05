@@ -1,6 +1,7 @@
 # pages/sources.py
 import streamlit as st
-
+logo_image = "images/logo.png"
+st.logo(logo_image,size='large')
 st.title("\U0001F4C4 Metodologia")
 st.markdown("""
 Para estimar la **alcalinidad** y la **dureza** del agua utilizada en café, se parte de su **composición química**, en particular de los minerales disueltos expresados en mg/L. Los cálculos se basan en la siguiente metodología:
@@ -20,3 +21,8 @@ La alcalinidad refleja la capacidad del agua para neutralizar ácidos, y está p
 Esta relación asume que todos los HCO₃⁻ provienen de carbonatos y bicarbonatos equivalentes a CaCO₃.
 
 """)
+
+st.sidebar.success("Selecciona una pestaña arriba.")
+
+st.sidebar.markdown('CoffeeWater permite visualizar, comparar y mezclar aguas utilizadas en preparación de café, en función de su alcalinidad y dureza. Puedes elegir dos marcas (ciudad, embotellada, comercial o oficial), definir la proporción de mezcla y ver dónde cae la combinación respecto a la zona ideal SCA.')
+# add the logo small
